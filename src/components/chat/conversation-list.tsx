@@ -113,7 +113,7 @@ export function ConversationList() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="opacity-0 group-hover:opacity-100 transition-opacity p-1 h-auto text-red-500 hover:text-red-700 hover:bg-red-50"
+                      className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity p-1 h-auto text-red-500 hover:text-red-700 hover:bg-red-50"
                       onClick={(e) => handleDeleteConversation(id, e)}
                     >
                       <Trash2 className="w-3 h-3" />
