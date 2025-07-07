@@ -16,6 +16,7 @@ type SetState = (
 
 /* --------- CONVERSATION MANAGEMENT --------- */
 export const createConversation =
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (set: SetState, _get: () => ChatState) => (): string => {
     const newId = generateConversationId();
     const initialScore: LeadScore = {
