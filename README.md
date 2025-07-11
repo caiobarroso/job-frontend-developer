@@ -1,5 +1,3 @@
-Aqui está o conteúdo formatado em Markdown para seu README:
-
 # Dolado Frontend Test
 
 ## Experiência de desenvolvimento
