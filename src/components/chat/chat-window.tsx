@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { useChatStore } from "@/store/chat/store";
+import { useEffect, useRef } from "react";
+import { DiagnosisCard } from "./diagnosis-card";
 import { MessageBubble } from "./message-bubble";
+import { MobileConversationToggle } from "./mobile-conversation-toggle";
 import { OptionsBar } from "./options-bar";
 import { OptionsLoading } from "./options-loading";
 import { TypingIndicator } from "./typing-indicator";
-import { DiagnosisCard } from "./diagnosis-card";
-import { MobileConversationToggle } from "./mobile-conversation-toggle";
 
 interface ChatWindowProps {
   isMobileSidebarOpen: boolean;
@@ -129,18 +129,14 @@ export function ChatWindow({
           );
         })}
 
-        {/* Typing Indicator */}
         <TypingIndicator />
 
-        {/* Scroll anchor */}
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Response Area */}
       <div className="sticky bottom-0 bg-white border-t border-gray-200 p-4">
         {/* Verifica se há opções disponíveis */}
-        {(currentStep?.options && currentStep.options.length > 0) ||
-        currentStep?.nextSteps ? (
+        {currentStep?.options && currentStep.options.length > 0 ? (
           <>
             {/* Mostra loading se o bot estiver digitando */}
             {isStreaming ? (
@@ -148,8 +144,6 @@ export function ChatWindow({
             ) : /* Mostra as opções quando o bot terminar de falar */
             currentStep?.options && currentStep.options.length > 0 ? (
               <OptionsBar options={currentStep.options} />
-            ) : currentStep?.nextSteps ? (
-              <OptionsBar options={currentStep.nextSteps.options} />
             ) : null}
           </>
         ) : null}

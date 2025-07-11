@@ -10,14 +10,7 @@ export type StepType =
   | "business_model"
   | "current_challenges"
   | "market_presence"
-  | "revenue_range"
-  | "team_structure"
-  | "technology_stack"
   | "marketplace_experience"
-  | "competitive_analysis"
-  | "growth_goals"
-  | "budget_range"
-  | "decision_timeline"
   | "stakeholder_buy_in"
   | "diagnosis"
   | "result_basic"
@@ -30,7 +23,6 @@ export interface ChatMessage {
   from: "bot" | "user";
   text: string;
   timestamp?: string;
-  metadata?: Record<string, string | number | boolean>;
 }
 
 /** Sistema de pontuação para qualificação de leads */
@@ -54,17 +46,9 @@ export interface DiagnosisBlock {
   potential: string;
   specificInsights: string[];
   recommendations: string[];
-  riskFactors?: string[];
   timeline?: string;
   investmentRange?: string;
   roiProjection?: string;
-}
-
-/** Próximos passos personalizados */
-export interface NextStepsBlock {
-  message: string;
-  options: string[];
-  urgency: "high" | "medium" | "low";
 }
 
 /** Estrutura base de cada etapa do fluxo */
@@ -73,8 +57,5 @@ export interface ChatStep {
   message: string;
   options?: string[];
   diagnosis?: DiagnosisBlock;
-  nextSteps?: NextStepsBlock;
   scoring?: Record<string, number>;
-  estimatedTime?: number;
-  tags?: string[];
 }

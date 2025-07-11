@@ -11,8 +11,6 @@ export const chatFlow: ChatStep[] = [
       "Primeiro, quero saber mais sobre a metodologia",
       "Qual o diferencial da Dolado?",
     ],
-    estimatedTime: 8,
-    tags: ["introduction", "qualification"],
   },
 
   {
@@ -23,8 +21,6 @@ export const chatFlow: ChatStep[] = [
       "Perfeito, vamos ao diagnóstico",
       "Quero ver alguns cases de sucesso primeiro",
     ],
-    estimatedTime: 7,
-    tags: ["methodology", "credibility"],
   },
 
   // ===== QUALIFICAÇÃO DE EMPRESA =====
@@ -46,8 +42,6 @@ export const chatFlow: ChatStep[] = [
       "Corporação (R$ 200M+/ano)": 10,
       "Grupo/Holding com múltiplas empresas": 10,
     },
-    estimatedTime: 6,
-    tags: ["company-size", "revenue", "qualification"],
   },
 
   {
@@ -72,8 +66,6 @@ export const chatFlow: ChatStep[] = [
       "Operação mista/híbrida": 7,
       "Prestação de serviços": 3,
     },
-    estimatedTime: 5,
-    tags: ["business-model", "qualification"],
   },
 
   // ===== ANÁLISE DE DESAFIOS ATUAIS =====
@@ -101,8 +93,6 @@ export const chatFlow: ChatStep[] = [
       "Equipe sem expertise digital": 6,
       "Conflitos com distribuidores/parceiros": 3,
     },
-    estimatedTime: 4,
-    tags: ["challenges", "urgency", "pain-points"],
   },
 
   // ===== PRESENÇA DIGITAL ATUAL =====
@@ -128,8 +118,6 @@ export const chatFlow: ChatStep[] = [
       "Focamos só no offline": 8,
       "Temos presença digital mas não vendemos": 7,
     },
-    estimatedTime: 3,
-    tags: ["digital-presence", "e-commerce", "current-state"],
   },
 
   // ===== EXPERIÊNCIA COM MARKETPLACES =====
@@ -153,8 +141,6 @@ export const chatFlow: ChatStep[] = [
       "Marketplaces são parte importante do negócio": 3,
       "Temos operação sofisticada multicanal": 2,
     },
-    estimatedTime: 2,
-    tags: ["marketplace-experience", "budget", "investment"],
   },
 
   // ===== ESTRUTURA E DECISÃO =====
@@ -178,8 +164,6 @@ export const chatFlow: ChatStep[] = [
       "Processo corporativo estruturado": 4,
       "Ainda estou mapeando internamente": 3,
     },
-    estimatedTime: 1,
-    tags: ["decision-making", "authority", "final-qualification"],
   },
 
   // ===== DIAGNÓSTICO INTELIGENTE =====
@@ -188,8 +172,6 @@ export const chatFlow: ChatStep[] = [
     message:
       "Perfeito! Agora vou processar suas respostas e criar um diagnóstico personalizado...",
     options: [],
-    estimatedTime: 1,
-    tags: ["processing", "diagnosis"],
   },
 
   // ===== RESULTADO DINÂMICO COM DIAGNÓSTICO =====
@@ -226,7 +208,6 @@ export const chatFlow: ChatStep[] = [
       investmentRange: "R$ 10k - R$ 30k setup + R$ 5k-20k/mês operação",
       roiProjection: "ROI de 200-350% no primeiro ano",
     },
-    tags: ["result", "basic", "diagnosis"],
   },
 
   {
@@ -263,7 +244,6 @@ export const chatFlow: ChatStep[] = [
       investmentRange: "R$ 50k - R$ 150k setup + R$ 20k-80k/mês operação",
       roiProjection: "ROI de 250-400% no primeiro ano",
     },
-    tags: ["result", "advanced", "diagnosis"],
   },
 
   {
@@ -299,7 +279,6 @@ export const chatFlow: ChatStep[] = [
       investmentRange: "R$ 150k - R$ 500k setup + R$ 50k-200k/mês operação",
       roiProjection: "ROI de 400-600% no primeiro ano",
     },
-    tags: ["result", "enterprise", "diagnosis"],
   },
 
   {
@@ -307,6 +286,5 @@ export const chatFlow: ChatStep[] = [
     message:
       "Foi um prazer falar com você! 🚀\n\nSeu diagnóstico personalizado está pronto. Qualquer dúvida sobre como implementar essas estratégias, é só me chamar aqui.\n\nSucesso na jornada de crescimento digital! 💪",
     options: ["Começar nova conversa"],
-    tags: ["goodbye", "final"],
   },
 ];

@@ -91,19 +91,11 @@ export function nextIdFromRules(current: StepType): StepType | undefined {
     market_presence: "marketplace_experience",
     marketplace_experience: "stakeholder_buy_in",
     stakeholder_buy_in: "diagnosis",
-    diagnosis: "result_basic", // será sobrescrito pela lógica de pontuação
+    diagnosis: "result_basic",
     result_basic: "goodbye",
     result_advanced: "goodbye",
     result_enterprise: "goodbye",
     goodbye: undefined,
-    // Fluxo simplificado - alguns passos não são usados no fluxo principal
-    revenue_range: "team_structure",
-    team_structure: "technology_stack",
-    technology_stack: "marketplace_experience",
-    competitive_analysis: "growth_goals",
-    growth_goals: "budget_range",
-    budget_range: "decision_timeline",
-    decision_timeline: "stakeholder_buy_in",
   };
   return map[current];
 }

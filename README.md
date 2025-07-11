@@ -1,6 +1,5 @@
 Aqui está o conteúdo formatado em Markdown para seu README:
 
-
 # Dolado Frontend Test
 
 ## Experiência de desenvolvimento
@@ -14,6 +13,10 @@ Desenvolver esse projeto foi uma experiência muito positiva. Desde o início, b
 - A exibição das mensagens foi refinada com animações suaves e delays controlados, simulando uma IA real
 - A separação entre UI, estado e dados foi mantida de forma clara para facilitar manutenção e leitura
 
+## Testes
+
+Os testes foram escritos com **Vitest** e cobrem o gerenciamento de estado do chat. Testam criação de conversas, navegação entre elas, fluxo de mensagens e reset do estado. O mock do fluxo de conversa garante que os testes sejam consistentes e previsíveis.
+
 ## Organização do projeto
 
 ```bash
@@ -22,6 +25,7 @@ src/
 ├─ store/           # Estado global com Zustand
 ├─ mocks/           # Fluxo da conversa baseado em JSON
 ├─ types/           # Tipagens do sistema
+├─ tests/           # Testes dos fluxos do chat
 ├─ app/             # Estrutura base do Next.js
 ```
 
@@ -36,4 +40,7 @@ yarn dev
 ```
 
 A aplicação estará disponível em `http://localhost:3000`.
+
+```
+
 ```
