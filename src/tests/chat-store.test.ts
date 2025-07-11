@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { useChatStore } from "@/store/chat/store";
 import { chatFlow } from "@/mocks/chat-flow";
+import { useChatStore } from "@/store/chat/store";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/mocks/chat-flow", () => ({
   chatFlow: [
@@ -94,7 +94,6 @@ describe("useChatStore", () => {
           urgency: 0,
           authority: 0,
         },
-        leadTier: "unqualified",
         createdAt: expect.any(String),
         updatedAt: expect.any(String),
         completedSteps: [],

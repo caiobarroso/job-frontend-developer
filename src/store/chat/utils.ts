@@ -1,5 +1,5 @@
 import { chatFlow } from "@/mocks/chat-flow";
-import type { ChatStep, LeadScore, LeadTier, StepType } from "@/types/chat";
+import type { ChatStep, LeadScore, StepType } from "@/types/chat";
 
 /* Util — retorna o índice de um passo pelo id */
 export const idxOf = (id: StepType) =>
@@ -72,12 +72,11 @@ export const calculateScore = (
   };
 };
 
-/* Util — determina tier baseado na pontuação */
-export const determineLeadTier = (score: LeadScore): LeadTier => {
-  if (score.total >= 40) return "enterprise";
-  if (score.total >= 20) return "advanced";
-  if (score.total >= 10) return "basic";
-  return "unqualified";
+/* Util — determina o step de resultado baseado na pontuação */
+export const getResultStepId = (score: number): StepType => {
+  if (score >= 40) return "result_enterprise";
+  if (score >= 20) return "result_advanced";
+  return "result_basic";
 };
 
 /* ----------------- TABELA CENTRAL DE NAVEGAÇÃO -------------- */

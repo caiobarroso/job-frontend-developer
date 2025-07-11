@@ -1,6 +1,7 @@
 "use client";
 
 import { useChatStore } from "@/store/chat/store";
+import { getResultStepId } from "@/store/chat/utils";
 import { useEffect, useRef } from "react";
 import { DiagnosisCard } from "./diagnosis-card";
 import { MessageBubble } from "./message-bubble";
@@ -104,13 +105,10 @@ export function ChatWindow({
           const getDiagnosisStep = () => {
             if (!messageWithDiagnosis) return null;
 
-            const score = currentConversation.leadScore.total;
-
-            if (score >= 40)
-              return steps.find((s) => s.id === "result_enterprise");
-            if (score >= 20)
-              return steps.find((s) => s.id === "result_advanced");
-            return steps.find((s) => s.id === "result_basic");
+            const resultStepId = getResultStepId(
+              currentConversation.leadScore.total
+            );
+            return steps.find((s) => s.id === resultStepId);
           };
 
           const diagnosisStep = getDiagnosisStep();

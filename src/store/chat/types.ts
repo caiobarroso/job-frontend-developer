@@ -1,10 +1,4 @@
-import type {
-  ChatMessage,
-  ChatStep,
-  StepType,
-  LeadScore,
-  LeadTier,
-} from "@/types/chat";
+import type { ChatMessage, ChatStep, LeadScore, StepType } from "@/types/chat";
 
 /* Tipo para filtros de conversa */
 export type ConversationFilter = "all" | "active" | "completed";
@@ -15,7 +9,6 @@ export interface Conversation {
   messages: ChatMessage[];
   payload: Record<string, string>;
   leadScore: LeadScore;
-  leadTier: LeadTier;
   createdAt: string;
   updatedAt: string;
   completedSteps: StepType[];

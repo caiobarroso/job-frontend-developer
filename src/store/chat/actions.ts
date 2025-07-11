@@ -3,8 +3,8 @@ import type { LeadScore, StepType } from "@/types/chat";
 import type { ChatState, Conversation, ConversationFilter } from "./types";
 import {
   calculateScore,
-  determineLeadTier,
   generateConversationId,
+  getResultStepId,
   idxOf,
   nextIdFromRules,
 } from "./utils";
@@ -45,7 +45,6 @@ export const createConversation =
       payload: {},
 
       leadScore: initialScore,
-      leadTier: "unqualified",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       completedSteps: [],
@@ -268,7 +267,6 @@ export const updateLeadScore =
 
     const leadScore = calculateScore(currentConv.payload, steps);
     console.log("leadScore", leadScore);
-    const leadTier = determineLeadTier(leadScore);
 
     set({
       conversations: {
@@ -276,7 +274,6 @@ export const updateLeadScore =
         [currentConversationId]: {
           ...currentConv,
           leadScore,
-          leadTier,
           updatedAt: new Date().toISOString(),
         },
       },
@@ -425,7 +422,6 @@ export const reset = (set: SetState, get: () => ChatState) => (): void => {
         messages: [],
         payload: {},
         leadScore: initialScore,
-        leadTier: "unqualified",
         completedSteps: [],
         updatedAt: new Date().toISOString(),
       },
@@ -453,9 +449,7 @@ export const getNextStepId =
     if (!currentConv) return undefined;
 
     if (currentConv.currentStepId === "diagnosis") {
-      if (currentConv.leadScore.total >= 40) return "result_enterprise";
-      if (currentConv.leadScore.total >= 20) return "result_advanced";
-      return "result_basic";
+      return getResultStepId(currentConv.leadScore.total);
     }
 
     return nextIdFromRules(currentConv.currentStepId);
