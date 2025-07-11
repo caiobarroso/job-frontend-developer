@@ -43,15 +43,8 @@ export interface LeadScore {
   authority: number;
 }
 
-/** Níveis de qualificação do lead */
-export type LeadTier = "enterprise" | "advanced" | "basic" | "unqualified";
-
-/** Condições para navegação condicional */
-export interface NavigationCondition {
-  field: string;
-  operator: "equals" | "contains" | "greater_than" | "less_than" | "in";
-  value: string | number | string[];
-}
+/** Tier do lead baseado na pontuação */
+export type LeadTier = "unqualified" | "basic" | "advanced" | "enterprise";
 
 /** Análise de diagnóstico expandida */
 export interface DiagnosisBlock {
@@ -74,14 +67,6 @@ export interface NextStepsBlock {
   urgency: "high" | "medium" | "low";
 }
 
-/** Configuração de segmentação */
-export interface SegmentConfig {
-  name: string;
-  criteria: NavigationCondition[];
-  nextStep: StepType;
-  priority: number;
-}
-
 /** Estrutura base de cada etapa do fluxo */
 export interface ChatStep {
   id: StepType;
@@ -89,9 +74,7 @@ export interface ChatStep {
   options?: string[];
   diagnosis?: DiagnosisBlock;
   nextSteps?: NextStepsBlock;
-  segments?: SegmentConfig[];
   scoring?: Record<string, number>;
-  accessConditions?: NavigationCondition[];
   estimatedTime?: number;
   tags?: string[];
 }

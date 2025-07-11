@@ -1,23 +1,18 @@
 import { chatFlow } from "@/mocks/chat-flow";
-import type {
-  ChatStep,
-  StepType,
-  LeadScore,
-  LeadTier,
-  NavigationCondition,
-} from "@/types/chat";
+import type { ChatStep, LeadScore, LeadTier, StepType } from "@/types/chat";
 
 /* Util — retorna o índice de um passo pelo id */
 export const idxOf = (id: StepType) =>
   chatFlow.findIndex((step) => step.id === id);
 
 /* Util — gera ID único para conversa */
-export const generateConversationId = () =>
-  `conv_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+export const generateConversationId = (): string => {
+  return `conv_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+};
 
 /* Util — calcula pontuação baseada nas respostas */
 export const calculateScore = (
-  responses: Record<string, string>,
+  payload: Record<string, string>,
   steps: ChatStep[]
 ): LeadScore => {
   let total = 0;
@@ -27,41 +22,45 @@ export const calculateScore = (
   let urgency = 0;
   let authority = 0;
 
-  // Percorre todas as respostas e soma as pontuações
-  Object.entries(responses).forEach(([stepId, response]) => {
-    const step = steps.find((s) => s.id === stepId);
-    if (step?.scoring && step.scoring[response]) {
-      const score = step.scoring[response];
+  // Mapeia campos para categorias de pontuação
+  const fieldMapping: Record<string, keyof Omit<LeadScore, "total">> = {
+    company_size: "companySize",
+    business_model: "marketFit",
+    current_challenges: "urgency",
+    market_presence: "budgetFit",
+    marketplace_experience: "budgetFit",
+    stakeholder_buy_in: "authority",
+  };
+
+  for (const [field, value] of Object.entries(payload)) {
+    const step = steps.find((s) => s.id === field);
+    if (step?.scoring && step.scoring[value]) {
+      const score = step.scoring[value];
       total += score;
 
-      // Categoriza a pontuação por tipo
-      switch (stepId) {
-        case "company_size":
-          companySize = score;
-          break;
-        case "business_model":
-        case "market_presence":
-        case "marketplace_experience":
-          marketFit += score;
-          break;
-        case "current_challenges":
-          urgency += score;
-          break;
-        case "stakeholder_buy_in":
-          authority = score;
-          break;
-        default:
-          break;
+      // Distribui pontuação por categoria
+      const category = fieldMapping[field];
+      if (category) {
+        switch (category) {
+          case "companySize":
+            companySize = score;
+            break;
+          case "marketFit":
+            marketFit = score;
+            break;
+          case "budgetFit":
+            budgetFit += score;
+            break;
+          case "urgency":
+            urgency = score;
+            break;
+          case "authority":
+            authority = score;
+            break;
+        }
       }
     }
-  });
-
-  // Normaliza as pontuações por categoria
-  marketFit = Math.min(marketFit, 10);
-  budgetFit = Math.min(
-    responses.budget_range ? parseInt(responses.budget_range) || 0 : 0,
-    10
-  );
+  }
 
   return {
     total,
@@ -73,38 +72,12 @@ export const calculateScore = (
   };
 };
 
-/* Util — determina o tier do lead baseado na pontuação */
+/* Util — determina tier baseado na pontuação */
 export const determineLeadTier = (score: LeadScore): LeadTier => {
   if (score.total >= 40) return "enterprise";
   if (score.total >= 20) return "advanced";
   if (score.total >= 10) return "basic";
   return "unqualified";
-};
-
-/* Util — verifica se uma condição é atendida */
-export const checkCondition = (
-  condition: NavigationCondition,
-  data: Record<string, string | number>
-): boolean => {
-  const fieldValue = data[condition.field];
-
-  switch (condition.operator) {
-    case "equals":
-      return fieldValue === condition.value;
-    case "contains":
-      return String(fieldValue).includes(String(condition.value));
-    case "greater_than":
-      return Number(fieldValue) > Number(condition.value);
-    case "less_than":
-      return Number(fieldValue) < Number(condition.value);
-    case "in":
-      return (
-        Array.isArray(condition.value) &&
-        condition.value.includes(String(fieldValue))
-      );
-    default:
-      return false;
-  }
 };
 
 /* ----------------- TABELA CENTRAL DE NAVEGAÇÃO -------------- */

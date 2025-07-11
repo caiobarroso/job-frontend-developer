@@ -1,12 +1,11 @@
 import { chatFlow } from "@/mocks/chat-flow";
-import type { StepType, LeadScore } from "@/types/chat";
+import type { LeadScore, StepType } from "@/types/chat";
 import type { ChatState, Conversation, ConversationFilter } from "./types";
 import {
-  generateConversationId,
-  idxOf,
   calculateScore,
   determineLeadTier,
-  checkCondition,
+  generateConversationId,
+  idxOf,
   nextIdFromRules,
 } from "./utils";
 
@@ -335,6 +334,7 @@ export const nextBotMessage =
       return;
     }
 
+    /* 🔄 Lógica especial para o passo de despedida */
     if (currentConv.currentStepId === "goodbye") {
       const goodbyeStep = steps[idxOf("goodbye")];
       const messageId = `msg_${Date.now()}_${Math.random()
@@ -367,52 +367,6 @@ export const nextBotMessage =
     if (!nextId) return; // fim de fluxo
 
     const nextStep = steps[idxOf(nextId)];
-
-    if (nextStep.accessConditions) {
-      const meetsConditions = nextStep.accessConditions.every((condition) =>
-        checkCondition(condition, {
-          ...currentConv.payload,
-          totalScore: currentConv.leadScore.total,
-        })
-      );
-
-      if (!meetsConditions) {
-        const defaultNextId = nextIdFromRules(currentConv.currentStepId);
-        if (defaultNextId) {
-          const defaultNextStep = steps[idxOf(defaultNextId)];
-          const messageId = `msg_${Date.now()}_${Math.random()
-            .toString(36)
-            .substr(2, 9)}`;
-
-          set({
-            conversations: {
-              ...conversations,
-              [currentConversationId]: {
-                ...currentConv,
-                currentStepId: defaultNextId,
-                completedSteps: [
-                  ...currentConv.completedSteps,
-                  currentConv.currentStepId,
-                ],
-                messages: [
-                  ...currentConv.messages,
-                  {
-                    from: "bot" as const,
-                    text: "", // placeholder vazio
-                    timestamp: new Date().toISOString(),
-                  },
-                ],
-                updatedAt: new Date().toISOString(),
-              },
-            },
-          });
-
-          get().startStreaming(messageId, defaultNextStep.message);
-        }
-        return;
-      }
-    }
-
     const messageId = `msg_${Date.now()}_${Math.random()
       .toString(36)
       .substr(2, 9)}`;
