@@ -40,7 +40,3 @@ yarn dev
 ```
 
 A aplicação estará disponível em `http://localhost:3000`.
-
-```
-
-```
